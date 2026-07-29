@@ -88,17 +88,17 @@ export function ConsultationSection() {
               <div className="flex flex-col gap-6">
                 {/* Card Head */}
                 <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="text-xl font-normal text-white">
-                      {plan.name}
-                    </span>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
                     {plan.badge && (
-                      <div className="bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 shrink-0">
+                      <div className="bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 shrink-0 w-fit order-1 sm:order-2">
                         <span className="text-xs font-medium text-amber-500">
                           {plan.badge}
                         </span>
                       </div>
                     )}
+                    <span className="text-xl font-normal text-white order-2 sm:order-1">
+                      {plan.name}
+                    </span>
                   </div>
 
                   <div className="space-y-1">
