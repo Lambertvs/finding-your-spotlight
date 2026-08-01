@@ -37,7 +37,7 @@ export function WhoIHelpGrid({ className, ...props }: CategoryGridProps) {
         <div
           key={title}
           className={cn(
-            "relative flex items-center justify-center bg-transparent px-6 py-10 md:py-12 text-center transition-colors duration-300 hover:bg-[#141414]",
+            "relative flex items-center justify-start md:justify-center bg-transparent px-6 py-10 md:py-12 text-left md:text-center transition-colors duration-300 hover:bg-[#141414]",
             borderStyles[index]
           )}
         >

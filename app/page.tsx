@@ -3,7 +3,7 @@ import { WhoIHelpSection } from "@/components/who-i-help-section";
 import { AboutSection } from "@/components/about-section";
 import { AreasSection } from "@/components/areas-section";
 import { ConsultationSection } from "@/components/consultation-section";
-import { FeaturesSection } from "@/components/features-section";
+import { BooksSection } from "@/components/books-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
 import { StackingSections } from "@/components/stacking-sections";
@@ -28,7 +28,7 @@ export default function Home() {
           <AboutSection />
           <AreasSection />
           <ConsultationSection />
-          <FeaturesSection />
+          <BooksSection />
           <div className="relative w-full bg-[#0F0F0F]">
             <ContactSection />
             <Footer />

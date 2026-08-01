@@ -124,8 +124,8 @@ export function Hero() {
         {/* Hero Content - Left Aligned matching Figma design */}
         <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16 w-full flex-1 flex flex-col justify-center py-12 md:py-20 z-10">
           <div className="flex flex-col items-start text-left max-w-5xl">
-            <h1 className="font-normal text-5xl sm:text-6xl md:text-7xl lg:text-[130px] xl:text-[165px] leading-[0.92] tracking-tight">
-              <span className="block text-zinc-500">
+            <h1 className="font-normal text-[74px] xs:text-[80px] sm:text-8xl md:text-9xl lg:text-[145px] xl:text-[180px] leading-[0.95] tracking-tight">
+              <span className="block bg-gradient-to-r from-zinc-500 via-zinc-400 to-zinc-200 bg-clip-text text-transparent pb-1">
                 {"Find Your".split(" ").map((word, i) => (
                   <motion.span
                     key={i}
@@ -142,7 +142,7 @@ export function Hero() {
                   </motion.span>
                 ))}
               </span>
-              <span className="block text-white">
+              <span className="block bg-gradient-to-r from-zinc-200 via-zinc-100 to-white bg-clip-text text-transparent pb-2 md:pb-4">
                 <motion.span
                   initial={{ filter: "blur(16px)", opacity: 0, y: 20 }}
                   animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
@@ -151,7 +151,7 @@ export function Hero() {
                     delay: 0.22,
                     ease: [0.215, 0.61, 0.355, 1],
                   }}
-                  className="inline-block"
+                  className="inline-block pb-1"
                 >
                   Spotlight
                 </motion.span>

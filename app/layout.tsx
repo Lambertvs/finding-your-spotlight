@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   },
 }
 
+import Script from "next/script"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,6 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("dark", spaceGroteskHeading.variable)}>
+      <head>
+        <Script src="https://js.yoco.com/sdk/v1/yoco-sdk-web.js" strategy="afterInteractive" />
+      </head>
       <body className={`${dmSans.variable} font-sans antialiased`}>
         {children}
         <Analytics />
