@@ -10,10 +10,45 @@ import { Button } from "@/components/ui/button";
 export function ContactSection() {
   const [meetingFormat, setMeetingFormat] = useState("online");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          full_name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          meeting_format: meetingFormat,
+        }),
+      });
+
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.error || "Failed to send message");
+      }
+
+      setSubmitted(true);
+    } catch (err: any) {
+      setErrorMessage(err.message || "An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -115,6 +150,11 @@ export function ContactSection() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
+                {errorMessage && (
+                  <div className="p-3 border border-red-500/50 bg-red-500/10 text-red-400 text-xs font-medium">
+                    {errorMessage}
+                  </div>
+                )}
                 <div className="space-y-2">
                   <label className="text-xs font-medium text-zinc-300">
                     Full Name <span className="text-amber-500">*</span>
@@ -122,6 +162,8 @@ export function ContactSection() {
                   <input
                     type="text"
                     required
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder="Enter your full name"
                     className="w-full bg-transparent border border-zinc-800 focus:border-amber-500/80 focus:ring-1 focus:ring-amber-500/80 rounded-none px-4 py-3 text-white text-sm placeholder-zinc-600 outline-none transition-all"
                   />
@@ -134,6 +176,8 @@ export function ContactSection() {
                   <input
                     type="email"
                     required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="name@example.com"
                     className="w-full bg-transparent border border-zinc-800 focus:border-amber-500/80 focus:ring-1 focus:ring-amber-500/80 rounded-none px-4 py-3 text-white text-sm placeholder-zinc-600 outline-none transition-all"
                   />
@@ -146,6 +190,8 @@ export function ContactSection() {
                   <input
                     type="tel"
                     required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+27 ..."
                     className="w-full bg-transparent border border-zinc-800 focus:border-amber-500/80 focus:ring-1 focus:ring-amber-500/80 rounded-none px-4 py-3 text-white text-sm placeholder-zinc-600 outline-none transition-all"
                   />
@@ -157,6 +203,8 @@ export function ContactSection() {
                   </label>
                   <textarea
                     rows={3}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Tell us about your current challenge or career goals..."
                     className="w-full bg-transparent border border-zinc-800 focus:border-amber-500/80 focus:ring-1 focus:ring-amber-500/80 rounded-none px-4 py-3 text-white text-sm placeholder-zinc-600 outline-none transition-all resize-none"
                   />
@@ -196,9 +244,10 @@ export function ContactSection() {
                 <div className="pt-3">
                   <Button
                     type="submit"
-                    className="w-full bg-white text-zinc-900 hover:bg-zinc-200 font-medium py-3 rounded-none text-base transition-colors"
+                    disabled={loading}
+                    className="w-full bg-white text-zinc-900 hover:bg-zinc-200 font-medium py-3 rounded-none text-base transition-colors disabled:opacity-50"
                   >
-                    Book Now
+                    {loading ? "Submitting..." : "Book Now"}
                   </Button>
                 </div>
               </form>
