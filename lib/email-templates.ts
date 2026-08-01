@@ -127,7 +127,7 @@ export function getClientConfirmationEmailHtml(data: BookingEmailData): string {
 																								</tr>
 																							</table>
 																						</td>
-																					</tr>
+																							</tr>
 																				</table>
 
 																				<!-- H3 Heading: Booking Summary -->
@@ -261,6 +261,9 @@ export function getAdminAlertEmailHtml(data: BookingEmailData): string {
       })
     : new Date().toLocaleString("en-ZA");
 
+  const cleanPhone = data.phone.replace(/[^0-9]/g, "");
+  const waMsg = encodeURIComponent("Hi " + data.fullName + ", this is Jennis from Finding Your Spotlight.");
+
   return `<!DOCTYPE html>
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
 <head>
@@ -340,7 +343,7 @@ export function getAdminAlertEmailHtml(data: BookingEmailData): string {
 													</table>
 
 													<div style="text-align: center; margin-bottom: 24px;">
-														<a href="https://wa.me/${data.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hi ${data.fullName}, this is Jennis from Finding Your Spotlight.`)}" style="background-color: #25d366; color: #ffffff; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-block; font-size: 14px;">
+														<a href="https://wa.me/${cleanPhone}?text=${waMsg}" style="background-color: #25d366; color: #ffffff; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-block; font-size: 14px;">
 															💬 Reply via WhatsApp
 														</a>
 													</div>
@@ -348,6 +351,107 @@ export function getAdminAlertEmailHtml(data: BookingEmailData): string {
 													<div style="border-top: 1px solid #d9d9d9; margin-bottom: 16px;"></div>
 													<p style="margin: 0; color: #888888; font-size: 12px; text-align: center;">
 														Admin Portal Alert — Finding Your Spotlight™
+													</p>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>`;
+}
+
+// 3. Digital eBook Purchase Receipt HTML Email Template
+export function getEbookReceiptEmailHtml(data: {
+  buyerName: string;
+  ebookTitle: string;
+  amountZar: string;
+  downloadUrl: string;
+  orderNumber: string;
+}): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>eBook Purchase Receipt - Finding Your Spotlight</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" type="text/css">
+	<style>
+		* { box-sizing: border-box; }
+		body { margin: 0; padding: 0; background-color: #ffffff; font-family: 'Inter', Helvetica, Arial, sans-serif; }
+		p { line-height: 1.6; margin: 0 0 12px 0; }
+	</style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #ffffff;">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+		<tbody>
+			<tr>
+				<td>
+					<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color: #000000; padding: 10px 5px 40px 5px; width: 700px; margin: 0 auto;" width="700">
+						<tbody>
+							<tr>
+								<td>
+									<table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+										<tbody>
+											<tr>
+												<td width="100%" style="font-weight: 400; text-align: left; background-color: #f5f5f7; vertical-align: middle; border-radius: 24px; padding: 40px 32px;">
+													
+													<!-- Logo Block -->
+													<table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+														<tr>
+															<td align="center" style="padding-bottom: 24px;">
+																<a href="https://findingyourspotlight.com" target="_blank">
+																	<img src="https://0a981888ea.imgdist.com/pub/bfra/dmqa1vfg/0w9/wa9/7lm/Finding%20Your%20Spotlight%20New%20Logo%20-%20blk%404x.png" style="display: block; height: auto; border: 0; width: 160px;" width="160" alt="Logo">
+																</a>
+															</td>
+														</tr>
+													</table>
+
+													<div style="border-top: 1px solid #d9d9d9; margin-bottom: 24px;"></div>
+
+													<h1 style="margin: 0 0 8px 0; color: #040b22; font-size: 26px; font-weight: 700; text-align: left;">
+														🎉 Order Confirmed: Download Your eBook!
+													</h1>
+													<p style="margin: 0 0 24px 0; color: #4a4f5f; font-size: 15px;">
+														Dear <strong>${data.buyerName}</strong>, thank you for your purchase from Finding Your Spotlight. Your payment has been processed successfully via Yoco.
+													</p>
+
+													<!-- Order Receipt Details -->
+													<table width="100%" border="0" cellpadding="12" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; border: 1px solid #e2e2e8; font-size: 14px; color: #333333; margin-bottom: 24px;">
+														<tr>
+															<td width="35%" style="font-weight: 600; color: #666666; border-bottom: 1px solid #eeeeee;">Order Reference:</td>
+															<td style="font-weight: 700; color: #040b22; border-bottom: 1px solid #eeeeee;">#${data.orderNumber}</td>
+														</tr>
+														<tr>
+															<td style="font-weight: 600; color: #666666; border-bottom: 1px solid #eeeeee;">Product Title:</td>
+															<td style="font-weight: 700; color: #efb400; border-bottom: 1px solid #eeeeee;">${data.ebookTitle}</td>
+														</tr>
+														<tr>
+															<td style="font-weight: 600; color: #666666; border-bottom: 1px solid #eeeeee;">Amount Paid:</td>
+															<td style="font-weight: 700; color: #25d366; border-bottom: 1px solid #eeeeee;">R ${data.amountZar} (ZAR)</td>
+														</tr>
+													</table>
+
+													<!-- Download Call To Action -->
+													<div style="text-align: center; margin: 32px 0;">
+														<a href="${data.downloadUrl}" target="_blank" style="background-color: #efb400; color: #040b22; padding: 14px 32px; border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-block; font-size: 16px; border: 1px solid #d49f00;">
+															📥 Download Your PDF eBook
+														</a>
+														<p style="margin: 12px 0 0 0; color: #888888; font-size: 12px;">
+															Note: This secure download link is active for 24 hours.
+														</p>
+													</div>
+
+													<div style="border-top: 1px solid #d9d9d9; margin-bottom: 16px;"></div>
+													<p style="margin: 0; color: #888888; font-size: 12px; text-align: center;">
+														Finding Your Spotlight™ — Executive Coaching & Digital Publications
 													</p>
 												</td>
 											</tr>

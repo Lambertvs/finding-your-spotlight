@@ -1,4 +1,8 @@
-import { getClientConfirmationEmailHtml, getAdminAlertEmailHtml } from "./email-templates";
+import {
+  getClientConfirmationEmailHtml,
+  getAdminAlertEmailHtml,
+  getEbookReceiptEmailHtml,
+} from "./email-templates";
 
 type SendBookingEmailParams = {
   fullName: string;
@@ -67,5 +71,82 @@ export async function sendBookingEmails(params: SendBookingEmailParams) {
     }
   } else {
     console.log("ℹ️ RESEND_API_KEY not configured.");
+  }
+}
+
+export async function sendEbookReceiptEmail(data: {
+  buyerName: string;
+  buyerEmail: string;
+  ebookTitle: string;
+  amountZar: string;
+  downloadUrl: string;
+  orderNumber: string;
+}) {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.SENDER_EMAIL || "onboarding@resend.dev";
+  const html = getEbookReceiptEmailHtml(data);
+
+  if (resendApiKey) {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: `Finding Your Spotlight <${fromEmail}>`,
+          to: [data.buyerEmail],
+          subject: `Order Receipt & Download: ${data.ebookTitle}`,
+          html,
+        }),
+      });
+
+      const resData = await res.json();
+      if (res.ok) {
+        console.log("✅ Live Resend eBook receipt sent:", resData.id);
+      }
+    } catch (err) {
+      console.error("Error sending eBook receipt email:", err);
+    }
+  }
+}
+
+export async function sendAdminAlertEmail(leadData: any) {
+  const params: SendBookingEmailParams = {
+    fullName: leadData.full_name,
+    email: leadData.email,
+    phone: leadData.phone,
+    serviceRequested: leadData.preferred_format,
+    message: leadData.message,
+    submittedAt: leadData.created_at,
+  };
+
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const adminEmail = process.env.ADMIN_ALERT_EMAIL || "info@findingyourspotlight.com";
+  const fromEmail = process.env.SENDER_EMAIL || "onboarding@resend.dev";
+  const adminHtml = getAdminAlertEmailHtml(params);
+
+  if (!resendApiKey) return false;
+
+  try {
+    const adminRes = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: `FYS System Alert <${fromEmail}>`,
+        to: [adminEmail],
+        subject: `🔔 Test Admin Alert: ${params.fullName}`,
+        html: adminHtml,
+      }),
+    });
+
+    return adminRes.ok;
+  } catch (err) {
+    console.error("Error sending admin alert email:", err);
+    return false;
   }
 }
