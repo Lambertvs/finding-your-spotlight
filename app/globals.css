@@ -5,7 +5,7 @@
 
 @theme inline {
   --font-sans: var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif;
-  --font-heading: var(--font-heading), 'Space Grotesk', sans-serif;
+  --font-heading: var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
 }
 
@@ -15,14 +15,11 @@
     color: #ffffff;
     font-family: var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif;
   }
-  html, input, textarea, select, button {
+  html, input, textarea, select, button, h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif;
   }
   html {
     @apply font-sans;
-  }
-  h1, h2, h3, h4, h5, h6, .font-heading {
-    font-family: var(--font-heading), 'Space Grotesk', sans-serif;
   }
 }
 
