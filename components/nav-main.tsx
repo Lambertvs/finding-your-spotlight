@@ -130,7 +130,7 @@ function NavMainContent({
                               href={subItem.url}
                               className={
                                 isItemActive
-                                  ? "text-amber-400 font-semibold bg-amber-500/10 border border-amber-500/20 rounded-md"
+                                  ? "text-amber-400 font-semibold bg-amber-500/10 rounded-md"
                                   : "text-zinc-400 hover:text-white transition-colors"
                               }
                             >
