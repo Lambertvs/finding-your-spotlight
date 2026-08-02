@@ -5,11 +5,12 @@ export const createClient = (
   cookieStore: Awaited<ReturnType<typeof cookies>>
 ) => {
   const supabaseUrl =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    "https://obcjgxgeccfqdtsyqeky.supabase.co";
   const supabaseKey =
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    "placeholder-key";
+    "sb_publishable_wITRnL924xVbQlcF21_WMQ_G49luh3_";
 
   return createServerClient(supabaseUrl, supabaseKey, {
     cookies: {

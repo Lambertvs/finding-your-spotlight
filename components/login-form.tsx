@@ -90,7 +90,13 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="info@findingyourspotlight.com"
-                    className="w-full bg-background border rounded-lg pl-9 pr-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-amber-500"
+                    style={{
+                      color: "#ffffff",
+                      backgroundColor: "#09090b",
+                      WebkitTextFillColor: "#ffffff",
+                      WebkitBoxShadow: "0 0 0px 1000px #09090b inset",
+                    }}
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg pl-9 pr-3 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 font-sans"
                   />
                 </div>
               </Field>
@@ -108,7 +114,13 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••••••"
-                    className="w-full bg-background border rounded-lg pl-9 pr-10 py-2 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-amber-500"
+                    style={{
+                      color: "#ffffff",
+                      backgroundColor: "#09090b",
+                      WebkitTextFillColor: "#ffffff",
+                      WebkitBoxShadow: "0 0 0px 1000px #09090b inset",
+                    }}
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg pl-9 pr-10 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 font-sans"
                   />
                   <button
                     type="button"
