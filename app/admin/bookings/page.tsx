@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { getSupabaseServerClient } from "@/lib/supabase-server";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
