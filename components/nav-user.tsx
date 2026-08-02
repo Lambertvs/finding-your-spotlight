@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { createBrowserClient } from "@supabase/ssr";
+import { createClient } from "@/utils/supabase/client";
 import {
   Avatar,
   AvatarFallback,
@@ -36,12 +36,7 @@ export function NavUser({
   const { isMobile } = useSidebar();
   const router = useRouter();
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const supabaseKey =
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-  const supabase = createBrowserClient(supabaseUrl, supabaseKey);
+  const supabase = createClient();
 
   const handleLogout = async () => {
     try {

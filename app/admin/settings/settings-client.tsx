@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { createBrowserClient } from "@supabase/ssr";
+import { createClient } from "@/utils/supabase/client";
 import { UserIcon, LockIcon, CheckCircle2Icon, ShieldCheckIcon, AlertCircleIcon, UploadIcon, CameraIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -25,12 +25,7 @@ export function SettingsClient({
   const [savingProfile, setSavingProfile] = useState(false);
   const [savingPassword, setSavingPassword] = useState(false);
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const supabaseKey =
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-  const supabase = createBrowserClient(supabaseUrl, supabaseKey);
+  const supabase = createClient();
 
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
