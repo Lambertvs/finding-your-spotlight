@@ -1,17 +1,10 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { getSupabaseServerClient } from "@/lib/supabase-server";
 import { sendBookingEmails } from "@/lib/email";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseSecretKey =
-  process.env.SUPABASE_SECRET_KEY ||
-  process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
-
-const supabase = createClient(supabaseUrl, supabaseSecretKey);
 
 export async function POST(request: Request) {
   try {
+    const supabase = getSupabaseServerClient();
     const body = await request.json();
     const { full_name, email, phone, message, meeting_format } = body;
 

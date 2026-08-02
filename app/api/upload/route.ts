@@ -1,16 +1,9 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseSecretKey =
-  process.env.SUPABASE_SECRET_KEY ||
-  process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
-
-const supabase = createClient(supabaseUrl, supabaseSecretKey);
+import { getSupabaseServerClient } from "@/lib/supabase-server";
 
 export async function POST(request: Request) {
   try {
+    const supabase = getSupabaseServerClient();
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
     const bucket = (formData.get("bucket") as string) || "ebooks-private";
@@ -40,6 +33,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
     const { data: publicUrlData } = supabase.storage.from(bucket).getPublicUrl(data.path);
     const publicUrl = publicUrlData?.publicUrl || `${supabaseUrl}/storage/v1/object/public/${bucket}/${data.path}`;
 

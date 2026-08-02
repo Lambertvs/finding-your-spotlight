@@ -1,17 +1,10 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { getSupabaseServerClient } from "@/lib/supabase-server";
 import { sendEbookReceiptEmail } from "@/lib/email";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseSecretKey =
-  process.env.SUPABASE_SECRET_KEY ||
-  process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
-
-const supabase = createClient(supabaseUrl, supabaseSecretKey);
 
 export async function POST(request: Request) {
   try {
+    const supabase = getSupabaseServerClient();
     const body = await request.json();
     const { token, amountInCents, ebookId, buyerEmail, buyerName } = body;
 
@@ -70,15 +63,16 @@ export async function POST(request: Request) {
       ? filePath.replace("ebooks-private/", "")
       : filePath;
 
-    const { data: signedData, error: signedErr } = await supabase.storage
+    const { data: signedData } = await supabase.storage
       .from("ebooks-private")
       .createSignedUrl(relativePath, 86400); // 24 hours expiry
 
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
     const downloadUrl = signedData?.signedUrl || `${supabaseUrl}/storage/v1/object/public/ebooks-private/${relativePath}`;
 
     // 4. Save Order Record in Supabase
     const orderNumber = `FYS-${Math.floor(100000 + Math.random() * 900000)}`;
-    const { data: order } = await supabase.from("orders").insert([
+    await supabase.from("orders").insert([
       {
         order_number: orderNumber,
         buyer_name: buyerName || "Customer",
@@ -88,7 +82,7 @@ export async function POST(request: Request) {
         payment_status: "completed",
         yoco_charge_id: yocoData.id || "yoco-live-charge",
       },
-    ]).select().single();
+    ]);
 
     // 5. Send Client Receipt & Download Link via Resend
     await sendEbookReceiptEmail({

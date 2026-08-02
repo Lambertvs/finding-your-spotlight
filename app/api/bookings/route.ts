@@ -1,17 +1,10 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseSecretKey =
-  process.env.SUPABASE_SECRET_KEY ||
-  process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
-
-const supabase = createClient(supabaseUrl, supabaseSecretKey);
+import { getSupabaseServerClient } from "@/lib/supabase-server";
 
 // GET /api/bookings - Fetch leads
 export async function GET(request: Request) {
   try {
+    const supabase = getSupabaseServerClient();
     const { searchParams } = new URL(request.url);
     const status = searchParams.get("status");
 
@@ -36,6 +29,7 @@ export async function GET(request: Request) {
 // PATCH /api/bookings - Update lead status or admin notes
 export async function PATCH(request: Request) {
   try {
+    const supabase = getSupabaseServerClient();
     const body = await request.json();
     const { id, status, notes } = body;
 

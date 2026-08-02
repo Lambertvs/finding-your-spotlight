@@ -1,17 +1,10 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseSecretKey =
-  process.env.SUPABASE_SECRET_KEY ||
-  process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
-
-const supabase = createClient(supabaseUrl, supabaseSecretKey);
+import { getSupabaseServerClient } from "@/lib/supabase-server";
 
 // GET /api/ebooks - Fetch catalog items
 export async function GET() {
   try {
+    const supabase = getSupabaseServerClient();
     const { data, error } = await supabase
       .from("ebooks")
       .select("*")
@@ -32,6 +25,7 @@ export async function GET() {
 // POST /api/ebooks - Create new eBook catalog entry
 export async function POST(request: Request) {
   try {
+    const supabase = getSupabaseServerClient();
     const body = await request.json();
     const { title, slug, description, price_zar, file_path, cover_image_url, is_active } = body;
 
@@ -79,6 +73,7 @@ export async function POST(request: Request) {
 // PATCH /api/ebooks - Toggle active status or update eBook
 export async function PATCH(request: Request) {
   try {
+    const supabase = getSupabaseServerClient();
     const body = await request.json();
     const { id, is_active, price_zar, title, description } = body;
 
