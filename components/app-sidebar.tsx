@@ -102,8 +102,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     avatar: "/images/site_icon.png",
   });
 
-import { createClient } from "@/utils/supabase/client";
-
   useEffect(() => {
     const supabase = createClient();
 
