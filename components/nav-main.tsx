@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import React, { useState, useEffect, Suspense } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   Collapsible,
   CollapsibleContent,
@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sidebar";
 import { ChevronRightIcon } from "lucide-react";
 
-export function NavMain({
+function NavMainContent({
   items,
 }: {
   items: {
@@ -34,7 +34,11 @@ export function NavMain({
   }[];
 }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
+
+  const fullPath =
+    pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : "");
 
   // Auto-expand the parent collapsible section corresponding to the active route
   useEffect(() => {
@@ -42,8 +46,10 @@ export function NavMain({
 
     items.forEach((item) => {
       const isSubActive = item.items?.some((sub) => {
-        const subPath = sub.url.split("?")[0];
-        return pathname === subPath;
+        if (sub.url.includes("?")) {
+          return fullPath === sub.url;
+        }
+        return pathname === sub.url;
       });
 
       const isParentActive =
@@ -57,7 +63,7 @@ export function NavMain({
     });
 
     setOpenItems((prev) => ({ ...prev, ...newOpenState }));
-  }, [pathname, items]);
+  }, [pathname, fullPath, items]);
 
   const toggleItem = (title: string) => {
     setOpenItems((prev) => ({
@@ -74,8 +80,10 @@ export function NavMain({
       <SidebarMenu>
         {items.map((item) => {
           const isSubActive = item.items?.some((sub) => {
-            const subPath = sub.url.split("?")[0];
-            return pathname === subPath;
+            if (sub.url.includes("?")) {
+              return fullPath === sub.url;
+            }
+            return pathname === sub.url;
           });
 
           const isParentActive =
@@ -99,7 +107,7 @@ export function NavMain({
                     tooltip={item.title}
                     className={
                       isParentActive
-                        ? "text-amber-400 font-bold bg-zinc-800/50"
+                        ? "text-amber-400 font-bold bg-zinc-800/40"
                         : "text-zinc-300 hover:text-white"
                     }
                   >
@@ -111,8 +119,9 @@ export function NavMain({
                 <CollapsibleContent>
                   <SidebarMenuSub>
                     {item.items?.map((subItem) => {
-                      const subPath = subItem.url.split("?")[0];
-                      const isItemActive = pathname === subPath;
+                      const isItemActive = subItem.url.includes("?")
+                        ? fullPath === subItem.url
+                        : pathname === subItem.url && (!searchParams?.toString() || !subItem.url.includes("?"));
 
                       return (
                         <SidebarMenuSubItem key={subItem.title}>
@@ -121,7 +130,7 @@ export function NavMain({
                               href={subItem.url}
                               className={
                                 isItemActive
-                                  ? "text-amber-400 font-semibold bg-amber-500/10 rounded-md"
+                                  ? "text-amber-400 font-semibold bg-amber-500/10 border border-amber-500/20 rounded-md"
                                   : "text-zinc-400 hover:text-white transition-colors"
                               }
                             >
@@ -139,5 +148,24 @@ export function NavMain({
         })}
       </SidebarMenu>
     </SidebarGroup>
+  );
+}
+
+export function NavMain(props: {
+  items: {
+    title: string;
+    url: string;
+    icon?: React.ReactNode;
+    isActive?: boolean;
+    items?: {
+      title: string;
+      url: string;
+    }[];
+  }[];
+}) {
+  return (
+    <Suspense fallback={null}>
+      <NavMainContent {...props} />
+    </Suspense>
   );
 }

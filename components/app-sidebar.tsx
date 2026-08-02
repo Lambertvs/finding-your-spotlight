@@ -24,15 +24,10 @@ const navMainItems = [
     title: "Dashboard",
     url: "/admin",
     icon: <LayoutDashboardIcon />,
-    isActive: true,
     items: [
       {
         title: "Overview & Stats",
         url: "/admin",
-      },
-      {
-        title: "Sales Reports",
-        url: "/admin/reports",
       },
     ],
   },
