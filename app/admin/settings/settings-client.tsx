@@ -189,10 +189,10 @@ export function SettingsClient({
           </div>
         </div>
 
-        <form onSubmit={handleUpdateProfile} className="space-y-4 text-sm">
+        <form onSubmit={handleUpdateProfile} className="space-y-4 text-sm font-sans">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-muted-foreground block">
+              <label className="text-xs font-medium text-zinc-300 block font-sans">
                 Full Name
               </label>
               <input
@@ -201,19 +201,31 @@ export function SettingsClient({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Jennis Williamson"
-                className="w-full bg-background border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:ring-1 focus:ring-amber-500"
+                style={{
+                  color: "#ffffff",
+                  backgroundColor: "#09090b",
+                  WebkitTextFillColor: "#ffffff",
+                  WebkitBoxShadow: "0 0 0px 1000px #09090b inset",
+                }}
+                className="w-full bg-zinc-950 border border-zinc-700/80 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 font-sans transition-colors"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-muted-foreground block">
+              <label className="text-xs font-medium text-zinc-300 block font-sans">
                 Admin Email (Read-Only)
               </label>
               <input
                 type="email"
                 disabled
                 value={email}
-                className="w-full bg-muted/50 border rounded-lg px-3 py-2 text-muted-foreground cursor-not-allowed text-xs font-mono"
+                style={{
+                  color: "#a1a1aa",
+                  backgroundColor: "#09090b",
+                  WebkitTextFillColor: "#a1a1aa",
+                  WebkitBoxShadow: "0 0 0px 1000px #09090b inset",
+                }}
+                className="w-full bg-zinc-950/60 border border-zinc-800 rounded-lg px-3.5 py-2.5 text-zinc-400 cursor-not-allowed text-xs font-mono"
               />
             </div>
           </div>
@@ -251,10 +263,10 @@ export function SettingsClient({
           </div>
         )}
 
-        <form onSubmit={handleUpdatePassword} className="space-y-4 text-sm">
+        <form onSubmit={handleUpdatePassword} className="space-y-4 text-sm font-sans">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-muted-foreground block">
+              <label className="text-xs font-medium text-zinc-300 block font-sans">
                 New Password
               </label>
               <input
@@ -264,12 +276,18 @@ export function SettingsClient({
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full bg-background border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:ring-1 focus:ring-amber-500"
+                style={{
+                  color: "#ffffff",
+                  backgroundColor: "#09090b",
+                  WebkitTextFillColor: "#ffffff",
+                  WebkitBoxShadow: "0 0 0px 1000px #09090b inset",
+                }}
+                className="w-full bg-zinc-950 border border-zinc-700/80 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 font-sans transition-colors"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-muted-foreground block">
+              <label className="text-xs font-medium text-zinc-300 block font-sans">
                 Confirm New Password
               </label>
               <input
@@ -279,7 +297,13 @@ export function SettingsClient({
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full bg-background border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:ring-1 focus:ring-amber-500"
+                style={{
+                  color: "#ffffff",
+                  backgroundColor: "#09090b",
+                  WebkitTextFillColor: "#ffffff",
+                  WebkitBoxShadow: "0 0 0px 1000px #09090b inset",
+                }}
+                className="w-full bg-zinc-950 border border-zinc-700/80 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 font-sans transition-colors"
               />
             </div>
           </div>

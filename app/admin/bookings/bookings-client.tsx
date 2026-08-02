@@ -155,7 +155,13 @@ export function BookingsClient({ initialLeads }: { initialLeads: LeadItem[] }) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by name, email, phone..."
-            className="w-full bg-background border rounded-lg pl-9 pr-3 py-1.5 text-xs text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-amber-500"
+            style={{
+              color: "#ffffff",
+              backgroundColor: "#09090b",
+              WebkitTextFillColor: "#ffffff",
+              WebkitBoxShadow: "0 0 0px 1000px #09090b inset",
+            }}
+            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg pl-9 pr-3 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 font-sans"
           />
         </div>
       </div>
@@ -387,7 +393,13 @@ export function BookingsClient({ initialLeads }: { initialLeads: LeadItem[] }) {
                   value={adminNotes}
                   onChange={(e) => setAdminNotes(e.target.value)}
                   placeholder="Add private notes about this client or session schedule..."
-                  className="w-full bg-background border rounded-lg p-3 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-amber-500 resize-none"
+                  style={{
+                    color: "#ffffff",
+                    backgroundColor: "#09090b",
+                    WebkitTextFillColor: "#ffffff",
+                    WebkitBoxShadow: "0 0 0px 1000px #09090b inset",
+                  }}
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-3 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 resize-none font-sans"
                 />
                 <Button
                   onClick={handleSaveNotes}

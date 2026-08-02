@@ -15,15 +15,16 @@ type SendBookingEmailParams = {
 
 export async function sendBookingEmails(params: SendBookingEmailParams) {
   const resendApiKey = process.env.RESEND_API_KEY;
-  const adminEmail = process.env.ADMIN_ALERT_EMAIL || "developer@findingyourspotlight.com";
-  const fromEmail = process.env.SENDER_EMAIL || "onboarding@resend.dev";
+  const adminEmail = process.env.ADMIN_ALERT_EMAIL || "info@findingyourspotlight.com";
+  const fromEmail = process.env.SENDER_EMAIL || "no-reply@findingyourspotlight.com";
+  const replyToEmail = process.env.REPLY_TO_EMAIL || "info@findingyourspotlight.com";
 
   const clientHtml = getClientConfirmationEmailHtml(params);
   const adminHtml = getAdminAlertEmailHtml(params);
 
   if (resendApiKey) {
     try {
-      // 1. Send confirmation email to Client (or test email)
+      // 1. Send confirmation email to Client with reply_to set to Jennis's info inbox
       const clientRes = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
@@ -33,6 +34,7 @@ export async function sendBookingEmails(params: SendBookingEmailParams) {
         body: JSON.stringify({
           from: `Finding Your Spotlight <${fromEmail}>`,
           to: [params.email],
+          reply_to: replyToEmail,
           subject: "Your Consultation Booking Confirmation — Finding Your Spotlight",
           html: clientHtml,
         }),
@@ -45,7 +47,7 @@ export async function sendBookingEmails(params: SendBookingEmailParams) {
         console.log("✅ Live Resend client confirmation sent:", clientData.id);
       }
 
-      // 2. Send full alert email to Admin (Jennis / Developer)
+      // 2. Send full alert email to Admin (Jennis)
       const adminRes = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
@@ -55,6 +57,7 @@ export async function sendBookingEmails(params: SendBookingEmailParams) {
         body: JSON.stringify({
           from: `FYS Booking Alert <${fromEmail}>`,
           to: [adminEmail],
+          reply_to: params.email,
           subject: `🔔 New Booking Request from ${params.fullName}`,
           html: adminHtml,
         }),
@@ -83,7 +86,8 @@ export async function sendEbookReceiptEmail(data: {
   orderNumber: string;
 }) {
   const resendApiKey = process.env.RESEND_API_KEY;
-  const fromEmail = process.env.SENDER_EMAIL || "onboarding@resend.dev";
+  const fromEmail = process.env.SENDER_EMAIL || "no-reply@findingyourspotlight.com";
+  const replyToEmail = process.env.REPLY_TO_EMAIL || "info@findingyourspotlight.com";
   const html = getEbookReceiptEmailHtml(data);
 
   if (resendApiKey) {
@@ -97,6 +101,7 @@ export async function sendEbookReceiptEmail(data: {
         body: JSON.stringify({
           from: `Finding Your Spotlight <${fromEmail}>`,
           to: [data.buyerEmail],
+          reply_to: replyToEmail,
           subject: `Order Receipt & Download: ${data.ebookTitle}`,
           html,
         }),
@@ -124,7 +129,7 @@ export async function sendAdminAlertEmail(leadData: any) {
 
   const resendApiKey = process.env.RESEND_API_KEY;
   const adminEmail = process.env.ADMIN_ALERT_EMAIL || "info@findingyourspotlight.com";
-  const fromEmail = process.env.SENDER_EMAIL || "onboarding@resend.dev";
+  const fromEmail = process.env.SENDER_EMAIL || "no-reply@findingyourspotlight.com";
   const adminHtml = getAdminAlertEmailHtml(params);
 
   if (!resendApiKey) return false;

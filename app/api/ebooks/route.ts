@@ -75,7 +75,7 @@ export async function PATCH(request: Request) {
   try {
     const supabase = getSupabaseServerClient();
     const body = await request.json();
-    const { id, is_active, price_zar, title, description } = body;
+    const { id, is_active, price_zar, title, description, file_path, cover_image_url } = body;
 
     if (!id) {
       return NextResponse.json({ error: "Product ID is required." }, { status: 400 });
@@ -86,6 +86,8 @@ export async function PATCH(request: Request) {
     if (price_zar !== undefined) updatePayload.price_zar = Number(price_zar);
     if (title !== undefined) updatePayload.title = title;
     if (description !== undefined) updatePayload.description = description;
+    if (file_path !== undefined) updatePayload.file_path = file_path;
+    if (cover_image_url !== undefined) updatePayload.cover_image_url = cover_image_url;
 
     const { data, error } = await supabase
       .from("ebooks")
@@ -101,6 +103,31 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ success: true, ebook: data?.[0] });
   } catch (err) {
     console.error("API error in PATCH /api/ebooks:", err);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
+
+// DELETE /api/ebooks - Delete eBook catalog entry
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json({ error: "Product ID is required." }, { status: 400 });
+    }
+
+    const supabase = getSupabaseServerClient();
+    const { error } = await supabase.from("ebooks").delete().eq("id", id);
+
+    if (error) {
+      console.error("Error deleting ebook:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true, id });
+  } catch (err) {
+    console.error("API error in DELETE /api/ebooks:", err);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
