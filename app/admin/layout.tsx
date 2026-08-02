@@ -1,5 +1,5 @@
 import React from "react";
-import { DM_Sans } from "next/font/google";
+import { DM_Sans, Space_Grotesk } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import "./admin.css";
@@ -7,6 +7,11 @@ import "./admin.css";
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-heading",
 });
 
 export const metadata = {
@@ -23,7 +28,8 @@ export default function AdminLayout({
     <div
       className={cn(
         "admin-portal min-h-screen bg-background text-foreground font-sans",
-        dmSans.variable
+        dmSans.variable,
+        spaceGrotesk.variable
       )}
     >
       <TooltipProvider delayDuration={0}>

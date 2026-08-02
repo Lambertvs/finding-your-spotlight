@@ -112,7 +112,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans: var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif;
-  --font-heading: var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-heading), 'Space Grotesk', sans-serif;
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
@@ -121,12 +121,11 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    font-family: var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif;
   }
   body, input, textarea, select, button, label, table, th, td {
     font-family: var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif !important;
   }
   h1, h2, h3, h4, h5, h6, .font-heading {
-    font-family: var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif !important;
+    font-family: var(--font-heading), 'Space Grotesk', sans-serif !important;
   }
 }
