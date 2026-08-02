@@ -136,6 +136,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={currentUser} />
+        <div className="my-1 border-t border-sidebar-border/50 group-data-[collapsible=icon]:hidden" />
+        <div className="px-3 pb-2 pt-0.5 text-[10px] text-zinc-400 font-sans text-center leading-tight group-data-[collapsible=icon]:hidden">
+          Made with <span className="text-red-500">❤️</span> by <span className="font-semibold text-zinc-300">Wavepoint Studio</span>
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
