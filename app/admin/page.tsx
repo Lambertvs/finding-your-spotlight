@@ -16,16 +16,10 @@ import {
 } from "@/components/ui/sidebar";
 import { MessageSquareIcon, MailIcon, BookOpenIcon, CalendarCheckIcon, ArrowRightIcon } from "lucide-react";
 
-export const revalidate = 0; // Dynamic server component
+export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const supabaseKey =
-    process.env.SUPABASE_SECRET_KEY ||
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
-
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const supabase = getSupabaseServerClient();
 
   // Fetch recent leads
   const { data: recentLeads } = await supabase

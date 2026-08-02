@@ -16,16 +16,10 @@ import {
 } from "@/components/ui/sidebar";
 import { EbooksClient } from "./ebooks-client";
 
-export const revalidate = 0; // Dynamic server page
+export const dynamic = "force-dynamic";
 
 export default async function EbooksPage() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const supabaseKey =
-    process.env.SUPABASE_SECRET_KEY ||
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
-
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const supabase = getSupabaseServerClient();
 
   const { data: ebooks } = await supabase
     .from("ebooks")

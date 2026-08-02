@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { LoginForm } from "@/components/login-form";
 
+export const dynamic = "force-dynamic";
+
 export default function AdminLoginPage() {
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center p-4 md:p-6 overflow-hidden bg-background text-foreground">
