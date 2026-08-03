@@ -61,7 +61,7 @@ export function YocoCheckoutModal({
     setLoading(true);
 
     const publicKey =
-      process.env.NEXT_PUBLIC_YOCO_PUBLIC_KEY || "pk_test_e0507e9dxWk6rVJ598c46fe9af99";
+      process.env.NEXT_PUBLIC_YOCO_PUBLIC_KEY || "pk_test_9602e0e0nZ8zVNG72e34";
 
     // Helper to ensure Yoco SDK is loaded
     const getSdk = async () => {

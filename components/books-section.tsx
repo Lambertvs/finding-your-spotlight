@@ -143,7 +143,10 @@ export function BooksSection() {
               </div>
 
               {/* Details Stack at Bottom */}
-              <div className="flex flex-col gap-5 group max-w-xl">
+              <div
+                onClick={() => setSelectedBook(currentBook)}
+                className="flex flex-col gap-5 group max-w-xl cursor-pointer"
+              >
                 {/* Ebook Label */}
                 <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-400">
                   <ShoppingBagIcon className="w-4 h-4" />
