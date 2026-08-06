@@ -226,6 +226,7 @@ export function YocoCheckoutModal({
                   style={{
                     color: "#ffffff",
                     backgroundColor: "#09090b",
+                    fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
                     WebkitTextFillColor: "#ffffff",
                     WebkitBoxShadow: "0 0 0px 1000px #09090b inset",
                   }}
@@ -244,6 +245,7 @@ export function YocoCheckoutModal({
                   style={{
                     color: "#ffffff",
                     backgroundColor: "#09090b",
+                    fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
                     WebkitTextFillColor: "#ffffff",
                     WebkitBoxShadow: "0 0 0px 1000px #09090b inset",
                   }}
